@@ -27,7 +27,7 @@ O:BAG:SYD:(A;;0x1201bf;;;WD)(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;RC)S:AI(ML;;N
 Everyone (WD) has access mask 0x1201bf, which includes FILE_READ_DATA and FILE_WRITE_DATA. Local account aida-low belongs to Users and is not in Administrators. That account opened \\.\atlAccess and sent IOCTL 0x7B592418. The administrator locked one of its own pages, resolved that page, and watched the first byte. The administrator did not send the IOCTL.
 
 Map result:
-On 2026-11-02 the administrator held physical address 0x3e095000. aida-low sent IOCTL 0x7B592418 for that address and wrote 0x5A, then 0xA5, through the mapping returned to its process. Its result showed administrators_sid=absent, marker=0x5a map=0x5a, marker=0xa5 map=0xa5, and IOCTL PASS. The administrator's result showed saw page=0x5a and saw page=0xa5. The test did not show a crash.
+On 2026-11-02 the administrator held physical address 0x3e095000 and did not send the IOCTL. aida-low sent IOCTL 0x7B592418 for that address. Through the user-mode mapping returned to aida-low's process, that account wrote 0x5A and read 0x5A back, then wrote 0xA5 and read 0xA5 back. The administrator read the first byte of the same physical page and saw 0x5A, then 0xA5. aida-low wrote both bytes. The test did not show a crash.
 
 Other reports:
 CVE-2021-43975 describes the Linux atlantic NIC driver. It does not describe this Windows atlAccess.sys image or IOCTL 0x7B592418. A search of the 2026-11-02 CVE list found no atlAccess.sys and no IOCTL 0x7B592418. This note identifies the tested file by the hashes above.
