@@ -29,7 +29,4 @@ Everyone (WD) has access mask 0x1201bf, which includes FILE_READ_DATA and FILE_W
 Map result:
 On 2026-11-02 the administrator held physical address 0x3e095000 and did not send the IOCTL. aida-low sent IOCTL 0x7B592418 for that address with length 0x10. Through the user-mode mapping returned to aida-low's process, that account wrote 0x5A and read 0x5A back, then wrote 0xA5 and read 0xA5 back. The administrator read the first byte of the same physical page and saw 0x5A, then 0xA5. This run confirms that a Users account can obtain a writable mapping and modify another process's physical page. The test did not show a crash.
 
-Other reports:
-CVE-2021-43975 describes the Linux atlantic NIC driver. It does not describe this Windows atlAccess.sys image or IOCTL 0x7B592418. A search of the 2026-11-02 CVE list found no atlAccess.sys and no IOCTL 0x7B592418. This note identifies the tested file by the hashes above.
-
 Suggested fix: on this IOCTL, map only a physical address chosen inside the driver, and limit access to \\.\atlAccess to Administrators and SYSTEM.
